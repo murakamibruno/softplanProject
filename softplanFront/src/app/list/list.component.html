@@ -1,0 +1,61 @@
+<h2 class="text-center"> Listagem de Pessoas </h2>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let pessoa"> {{pessoa.nome}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sexo">
+    <th mat-header-cell *matHeaderCellDef> Sexo </th>
+    <td mat-cell *matCellDef="let pessoa"> {{changeSexoDisplay(pessoa.sexo)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let pessoa"> {{pessoa.email}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataNascimento">
+    <th mat-header-cell *matHeaderCellDef> Nascimento </th>
+    <td mat-cell *matCellDef="let pessoa"> {{pessoa.dataNascimento | date: 'dd/MM/yyyy'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="naturalidade">
+      <th mat-header-cell *matHeaderCellDef> Naturalidade </th>
+      <td mat-cell *matCellDef="let pessoa" > {{pessoa.naturalidade}} </td>
+    </ng-container>
+  
+  <ng-container matColumnDef="nacionalidade">
+      <th mat-header-cell *matHeaderCellDef> Nacionalidade </th>
+      <td mat-cell *matCellDef="let pessoa"> {{pessoa.nacionalidade }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="cpf">
+    <th mat-header-cell *matHeaderCellDef> CPF </th>
+    <td mat-cell *matCellDef="let pessoa"> {{pessoa.cpf }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataCadastro">
+    <th mat-header-cell *matHeaderCellDef> Data Cadastro </th>
+    <td mat-cell *matCellDef="let pessoa"> {{convertTimestampToDate(pessoa.dataCadastro) | date: 'dd/MM/yyyy HH:mm:ss' }} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="dataAtualizacao">
+    <th mat-header-cell *matHeaderCellDef> Data Atualização </th>
+    <td mat-cell *matCellDef="let pessoa"> {{convertTimestampToDate(pessoa.dataAtualizacao) | date: 'dd/MM/yyyy HH:mm:ss' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="editar">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let pessoa"> <button mat-raised-button color="primary" (click)="editPersonRedirect(pessoa)">Editar</button> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="excluir">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let pessoa"> <button mat-raised-button color="warn" (click)="deletePerson(pessoa)" >Excluir</button> </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

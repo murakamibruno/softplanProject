@@ -1,0 +1,38 @@
+<h2 class="text-center"> Edição de Pessoa</h2>
+<form #itemForm="ngForm" (ngSubmit)="savePerson()">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" class="form-control" [(ngModel)]="pessoa.nome" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" class="form-control" [(ngModel)]="pessoa.email">
+    </div>
+    <div class="form-group">
+        <label for="sexo">Sexo</label>
+        <select class="form-control" name="sexo" [(ngModel)]="pessoa.sexo">
+            <option *ngFor="let sexo of eSexoType | keyvalue" [ngValue]="sexo.value">{{sexo.key}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="dataNascimento">Data de nascimento</label>
+        <input type="date" name="dataNascimento"  class="form-control" [(ngModel)]="pessoa.dataNascimento" required>
+    </div>
+    <div class="form-group">
+        <label for="dataValidade"> Naturalidade </label>
+        <input type="text" name="naturalidade" [(ngModel)]="pessoa.naturalidade" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="dataFabricacao"> Nacionalidade </label>
+        <input type="text" name="nacionalidade" [(ngModel)]="pessoa.nacionalidade" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="dataFabricacao"> CPF </label>
+      <input type="text" name="cpf" [(ngModel)]="pessoa.cpf" class="form-control" required>
+  </div>
+    <div class="btn-toolbar">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <!--<h1>{{ formatDate(pessoa.dataNascimento) }}</h1>
+        <button type="submit" class="btn btn-primary" (click)="setIsSaving(false)" style="background-color: red; ">Cancelar</button>!-->
+    </div>
+</form>
