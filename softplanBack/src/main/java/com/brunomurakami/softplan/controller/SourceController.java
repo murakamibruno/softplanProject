@@ -15,7 +15,7 @@ public class SourceController {
     @GetMapping("")
     public Map<String, String> findGithubURL() {
         Map<String, String> url = new HashMap<>();
-        url.put("url", "https://github.com/murakamibruno/");
+        url.put("url", "https://github.com/murakamibruno/softplanProject/");
         return url;
     }
 }
