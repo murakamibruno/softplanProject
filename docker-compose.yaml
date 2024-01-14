@@ -3,6 +3,7 @@ services:
   ## Banco de dados em Mysql
   db:
     image: mysql:8.0.25
+    container_name: mysql
     ports:
       - '3306:3306'
     environment:
@@ -21,6 +22,7 @@ services:
       context: ./softplanBack
       dockerfile: ./Dockerfile
     image: murakamibruno/softplanback
+    container_name: backend
     ports:
       - '8080:8080'
       - '5005:5005'
@@ -32,10 +34,14 @@ services:
 
   ## Frontend em angular
   softplanfront:
-    container_name: softplanfront
+    container_name: frontend
     build:
       context:  ./softplanFront
       dockerfile: ./Dockerfile
     image: murakamibruno/softplanfront
     ports:
       - '9000:80'
+
+networks:
+  softplan-test:
+    driver: bridge

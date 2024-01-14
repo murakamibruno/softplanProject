@@ -37,8 +37,8 @@ export class CreateComponent implements OnInit {
       this.router.navigate(['/list']);
     },
     (err) => {
-      alert(err.error.forEach);
-      console.log(err);
+      alert(err.error.message);
+      console.log(err.error.message);
     });
   }
 
@@ -49,7 +49,7 @@ export class CreateComponent implements OnInit {
       },
       (err) => {
         alert('Ocorreu um erro');
-        console.log(err);
+        console.log(err.error.msg);
       });
     }
   }

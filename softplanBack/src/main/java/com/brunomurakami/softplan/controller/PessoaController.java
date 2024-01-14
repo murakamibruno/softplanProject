@@ -5,6 +5,7 @@ import com.brunomurakami.softplan.exception.PessoaNotFound;
 import com.brunomurakami.softplan.model.Pessoa;
 import com.brunomurakami.softplan.model.User;
 import com.brunomurakami.softplan.repository.PessoaRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/pessoa")
+@Slf4j
 public class PessoaController {
 
     private final PessoaRepository pessoaRepository;
@@ -63,7 +65,9 @@ public class PessoaController {
     public ResponseEntity<Pessoa> savePessoa (@Valid @RequestBody Pessoa pessoa) throws RuntimeException {
         Optional<Pessoa> pessoaByCpf = pessoaRepository.findPersonByCPF(pessoa.getCpf());
         if (pessoaByCpf.isPresent()) {
-            throw new CpfDuplicado(pessoa.getCpf());
+            String errorMsg = String.format("Pessoa com cpf: %s duplicado", pessoa.getCpf());
+            log.error(errorMsg);
+            throw new CpfDuplicado(errorMsg);
         } else {
             pessoa.setDataCadastro(OffsetDateTime.now());
             pessoa.setDataAtualizacao(OffsetDateTime.now());
@@ -79,7 +83,9 @@ public class PessoaController {
             if (!oldPessoa.getCpf().equals(pessoa.getCpf())) {
                 Optional<Pessoa> pessoaByCpf = pessoaRepository.findPersonByCPF(pessoa.getCpf());
                 if (pessoaByCpf.isPresent()) {
-                    throw new CpfDuplicado(pessoa.getCpf());
+                    String errorMsg = String.format("Pessoa com cpf: %s duplicado", pessoa.getCpf());
+                    log.error(errorMsg);
+                    throw new CpfDuplicado(errorMsg);
                 }
             }
             pessoa.setDataCadastro(oldPessoa.getDataCadastro());
