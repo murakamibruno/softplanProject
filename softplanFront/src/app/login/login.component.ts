@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       this.invalidLogin = false;
     },
     error => {
-      alert('Ocorreu um erro no login');
+      alert('Ocorreu um erro no login: ');
       this.invalidLogin = true;
     });
   }

@@ -40,7 +40,7 @@ export class ListComponent implements OnInit {
       this.dataSource = res;
     },
     (err) => {
-      alert('Ocorreu um erro');
+      alert('Ocorreu um erro: ' + err.error.message);
       console.log(err);
     });
   }

@@ -3,8 +3,6 @@ package com.brunomurakami.softplan.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,7 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static org.springframework.security.config.Customizer.*;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebSecurity
 public class SecurityConfig {
@@ -44,7 +42,7 @@ public class SecurityConfig {
     public static class PessoaWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .antMatcher("/pessoa/**")
+                    .antMatcher("/**")
                     .authorizeRequests(authorize -> authorize
                             .anyRequest().authenticated()
                     )
@@ -63,7 +61,7 @@ public class SecurityConfig {
             configuration.setAllowedMethods(Arrays.asList("*"));
             configuration.setAllowedHeaders(Arrays.asList("*"));
 
-            source.registerCorsConfiguration("/pessoa/**", configuration);
+            source.registerCorsConfiguration("/**", configuration);
             return source;
         }
     }

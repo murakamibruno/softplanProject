@@ -11,6 +11,8 @@ import java.util.Optional;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa,Long> {
 
-    @Query(value = "SELECT p.* FROM pessoa p where p.cpf = ?1", nativeQuery = true)
-    Optional<Pessoa> findPersonByCPF(String cpf);
+//    @Query(value = "SELECT p.* FROM pessoa p where p.cpf = ?1", nativeQuery = true)
+//    Optional<Pessoa> findPersonByCPF(String cpf);
+
+    Optional<Pessoa> findByCpf(String cpf);
 }

@@ -1,5 +1,6 @@
 package com.brunomurakami.softplan.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.*;
 
 @ControllerAdvice
+@Slf4j
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -28,6 +30,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String error = (" parametro " + ex.getParameterName() +  " está faltando");
 
         ExceptionMessage exceptionMessage = new ExceptionMessage(new Date(), error, HttpStatus.BAD_REQUEST);
+        log.error(exceptionMessage.getMessage());
         return new ResponseEntity<Object>(exceptionMessage, new HttpHeaders(), exceptionMessage.getStatus());
     }
 
@@ -38,6 +41,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String error = (" método " + ex.getMethod() +  " não suportado");
 
         ExceptionMessage exceptionMessage = new ExceptionMessage(new Date(), error, HttpStatus.BAD_REQUEST);
+        log.error(exceptionMessage.getMessage());
         return new ResponseEntity<Object>(exceptionMessage, new HttpHeaders(), exceptionMessage.getStatus());
     }
 
@@ -48,6 +52,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String error = ex.getLocalizedMessage();
 
         ExceptionMessage exceptionMessage = new ExceptionMessage(new Date(), error, HttpStatus.NOT_FOUND);
+        log.error(exceptionMessage.getMessage());
         return new ResponseEntity<Object>(exceptionMessage, new HttpHeaders(), exceptionMessage.getStatus());
     }
 
@@ -73,6 +78,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         ExceptionMessage exceptionMessage = new ExceptionMessage(new Date(), errors.toString(), HttpStatus.BAD_REQUEST);
+        log.error(exceptionMessage.getMessage());
         return new ResponseEntity<Object>(exceptionMessage, new HttpHeaders(), exceptionMessage.getStatus());
     }
 
@@ -83,18 +89,21 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
         ExceptionMessage exceptionMessage = new ExceptionMessage(new Date(), error, HttpStatus.BAD_REQUEST);
+        log.error(exceptionMessage.getMessage());
         return new ResponseEntity<Object>(exceptionMessage, new HttpHeaders(), exceptionMessage.getStatus());
     }
 
     @ExceptionHandler({PessoaNotFound.class})
     public ResponseEntity<Object> handlePedidoNotFound(PessoaNotFound ex, WebRequest request) {
         ExceptionMessage exceptionMessage = new ExceptionMessage(new Date(), ex.getMessage(), HttpStatus.NOT_FOUND);
+        log.error(exceptionMessage.getMessage());
         return new ResponseEntity<Object>(exceptionMessage, new HttpHeaders(), exceptionMessage.getStatus());
     }
 
     @ExceptionHandler({CpfDuplicado.class})
     public ResponseEntity<Object> handleCpfDuplicado(CpfDuplicado ex, WebRequest request) {
         ExceptionMessage exceptionMessage = new ExceptionMessage(new Date(), ex.getMessage(), HttpStatus.FORBIDDEN);
+        log.error(exceptionMessage.getMessage());
         return new ResponseEntity<Object>(exceptionMessage, new HttpHeaders(), exceptionMessage.getStatus());
     }
 

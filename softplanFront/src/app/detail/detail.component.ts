@@ -37,7 +37,7 @@ export class DetailComponent implements OnInit {
         this.pessoa.dataNascimento = this.formatDate(this.pessoa.dataNascimento);
       },
       (err) => {
-        alert('Ocorreu um erro');
+        alert('Ocorreu um erro: ' + err.error.message);
         console.log(err);
       });
     }
@@ -50,7 +50,7 @@ export class DetailComponent implements OnInit {
       this.router.navigate(['/list']);
     },
     (err) => {
-      alert('Ocorreu um erro');
+      alert('Ocorreu um erro: ' + err.error.message);
       console.log(err);
     });
   }

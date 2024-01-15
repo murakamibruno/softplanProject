@@ -3,7 +3,7 @@ services:
   ## Banco de dados em Mysql
   db:
     image: mysql:8.0.25
-    container_name: mysql
+    container_name: db
     ports:
       - '3306:3306'
     environment:
@@ -13,8 +13,6 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - ./softplanBack/docker/volume_mysql:/var/lib/mysql
-    links:
-      - softplanBack
   
   ## Backend em Spring boot          
   softplanBack:
@@ -22,19 +20,17 @@ services:
       context: ./softplanBack
       dockerfile: ./Dockerfile
     image: murakamibruno/softplanback
-    container_name: backend
+    container_name: back
     ports:
       - '8080:8080'
       - '5005:5005'
     environment:
       - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
       - PROFILE=dev
-    links:
-      - softplanfront
 
   ## Frontend em angular
   softplanfront:
-    container_name: frontend
+    container_name: front
     build:
       context:  ./softplanFront
       dockerfile: ./Dockerfile
