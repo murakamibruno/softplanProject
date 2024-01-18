@@ -20,17 +20,18 @@ services:
       context: ./softplanBack
       dockerfile: ./Dockerfile
     image: murakamibruno/softplanback
-    container_name: back
+    container_name: softplanBack
     ports:
       - '8080:8080'
       - '5005:5005'
     environment:
       - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
       - PROFILE=dev
+      - DB_HOST=db
 
   ## Frontend em angular
   softplanfront:
-    container_name: front
+    container_name: softplanfront
     build:
       context:  ./softplanFront
       dockerfile: ./Dockerfile

@@ -42,7 +42,7 @@ public class SecurityConfig {
     public static class PessoaWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .antMatcher("/**")
+                    .antMatcher("/pessoa/**")
                     .authorizeRequests(authorize -> authorize
                             .anyRequest().authenticated()
                     )
@@ -50,6 +50,7 @@ public class SecurityConfig {
                     .cors()
                     .and()
                     .csrf().disable();
+
         }
 
         @Bean

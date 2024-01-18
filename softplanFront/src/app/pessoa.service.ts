@@ -36,8 +36,4 @@ export class PessoaService {
     return this.http.put(this.baseUrl + pessoa.id, pessoa);
   }
 
-  public getSourceURL() {
-    return this.http.get(this.sourceUrl);
-  }
-
 }

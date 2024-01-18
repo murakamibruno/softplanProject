@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:9000", "http://localhost:8080"})
 @RequestMapping("/pessoa")
 @Slf4j
 @AllArgsConstructor

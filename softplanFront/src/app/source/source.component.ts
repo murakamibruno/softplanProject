@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PessoaService } from '../pessoa.service';
+import { SourceService } from './source.service';
 
 @Component({
   selector: 'app-source',
@@ -10,7 +10,7 @@ export class SourceComponent implements OnInit {
 
   url: any;
 
-  constructor(private service: PessoaService) { }
+  constructor(private service: SourceService) { }
 
   ngOnInit() {
     this.getSourceUrl();

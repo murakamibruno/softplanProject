@@ -73,8 +73,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             ConstraintViolationException ex, WebRequest request) {
         List<String> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            errors.add(violation.getRootBeanClass().getName() + " " +
-                    violation.getPropertyPath() + ": " + violation.getMessage());
+            errors.add(violation.getMessage());
         }
 
         ExceptionMessage exceptionMessage = new ExceptionMessage(new Date(), errors.toString(), HttpStatus.BAD_REQUEST);
