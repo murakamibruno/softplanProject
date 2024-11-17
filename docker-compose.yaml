@@ -13,13 +13,19 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - ./softplanBack/docker/volume_mysql:/var/lib/mysql
+
+  redis:
+    image: redis:5.0.14-alpine
+    container_name: redis
+    ports:
+      - '6379:6379'
   
-  ## Backend em Spring boot          
+  ## Backend em Spring boot
   softplanBack:
     build:
       context: ./softplanBack
       dockerfile: ./Dockerfile
-    image: murakamibruno/softplanback
+    image: murakamibruno/softplanback:0.0.1-SNAPSHOT
     container_name: softplanBack
     ports:
       - '8080:8080'
@@ -28,6 +34,10 @@ services:
       - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
       - PROFILE=dev
       - DB_HOST=db
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_CACHE_TYPE=redis
+      - CACHE_REDIS_TTL=60
 
   ## Frontend em angular
   softplanfront:

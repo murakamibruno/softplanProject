@@ -19,16 +19,27 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
+
+    private final RedisCacheService redisCacheService;
 
     public List<Pessoa> findAll() {
         return pessoaRepository.findAll();
     }
 
     public ResponseEntity<Pessoa> getPessoaById(@Valid @PathVariable(value = "id") Long id) throws RuntimeException {
-        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+        Optional<Pessoa> pessoa;
+        if (redisCacheService.existsForKey(id.toString())) {
+            pessoa = Optional.ofNullable(redisCacheService.get(id.toString()));
+            log.info("Pessoa obtida através de cache");
+        } else {
+            pessoa = pessoaRepository.findById(id);
+            redisCacheService.save(id.toString(), pessoa.get());
+            log.info("Inserido pessoa com chave {}", id);
+        }
         if (pessoa.isPresent()) {
             return new ResponseEntity<>(pessoa.get(), HttpStatus.OK);
         } else {
@@ -73,6 +84,10 @@ public class PessoaService {
             pessoa.setId(id);
             pessoa.setDataAtualizacao(OffsetDateTime.now());
             Pessoa pessoaUpdated = pessoaRepository.save(pessoa);
+            if (redisCacheService.existsForKey(id.toString())) {
+                redisCacheService.save(id.toString(), pessoaUpdated);
+                log.info("Pessoa atualizada no cache");
+            }
             return new ResponseEntity<>(pessoaUpdated, HttpStatus.OK);
         } else {
             throw new PessoaNotFound(id);
@@ -84,6 +99,9 @@ public class PessoaService {
         if (pessoa.isPresent()) {
             Pessoa pessoaDeleted = pessoa.get();
             pessoaRepository.delete(pessoaDeleted);
+            if (redisCacheService.existsForKey(id.toString())) {
+                redisCacheService.remove(id.toString());
+            }
             return new ResponseEntity<>(pessoaDeleted, HttpStatus.OK);
         } else {
             throw new PessoaNotFound(id);
